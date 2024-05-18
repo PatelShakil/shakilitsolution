@@ -1,10 +1,11 @@
-import './App.module.css'
+import './index.css'
+import Navbar from "./components/Navbar.tsx";
 
 function App() {
 
   return (
     <>
-        <h1>Shakil Patel Portfolio</h1>
+        <Navbar />
     </>
   )
 }
