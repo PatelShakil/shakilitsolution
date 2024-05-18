@@ -28,7 +28,7 @@ const Navbar = () => {
 
 
     return (
-        <nav className={'sticky top-2 z-50 py-3 backdrop-blur-lg border-b-neutral-700'}>
+        <nav className={'sticky z-50 py-2 backdrop-blur-lg border-b-neutral-700'}>
             <div className={'container px-4 mx-auto relative text-sm'}>
                 <div className={'flex justify-between items-center'}>
                     <div className={'flex items-center flex-shrink-0'}>
@@ -62,7 +62,7 @@ const Navbar = () => {
                 </div>
                 {
                     isMobileDrawerOpen && (
-                        <div className={'fixed right-0 z-20 bg-neutral-900 w-full p-12 flex flex-col justify-center items-center lg:hidden'}>
+                        <div className={'fixed right-0 mt-2 z-20 bg-neutral-900 w-full pb-12 flex flex-col justify-center items-center lg:hidden'}>
 
                             <ul className={'text-center'}>
                                 {
@@ -78,7 +78,7 @@ const Navbar = () => {
                                         Sign In
                                     </a>
                                     <a href={'#'}
-                                       className={'bg-gradient-to-r from-green-500 to-green-900 py-2 px-3 rounded-md'}>Create
+                                       className={'bg-gradient-to-r from-green-500 to-green-900 py-2 px-3 rounded-md'}>Create an
                                         Account</a>
                                 </div>
                             </div>
