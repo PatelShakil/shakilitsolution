@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "homepage": "https://patelshakil.github.io/shakilitsolution",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-"homepage":"https://patelshakil.github.io/shakilitsolution"
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "lucide-react": "^0.378.0",
