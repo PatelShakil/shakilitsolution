@@ -1,25 +1,24 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Menu, X} from "lucide-react";
+import {ref,onValue} from "firebase/database";
+import {database} from "../firebase.js";
+import LoadingComponent from "./utils/Loading.tsx";
 
 const Navbar = () => {
-    const navList = [
-        {
-            name:"Services",
-            path:"/services"
-        },
-        {
-            name:"Projects",
-            path:"/projects"
-        },
-        {
-            name:"Skills",
-            path:"/skills"
-        },
-        {
-            name:"Testimonials",
-            path:"/testimonials"
-        }
-    ]
+
+
+    const [navListData, setNavListData] = useState([]);
+
+    useEffect(()=>{
+
+        const dataRef = ref(database,"navList");
+
+        onValue(dataRef,(snapshot) =>{
+
+            const data = snapshot.val();
+            setNavListData(data);
+        });
+    });
 
     const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
     const toggleNavbar = () =>{
@@ -28,7 +27,7 @@ const Navbar = () => {
 
 
     return (
-        <nav className={'sticky z-50 py-2 backdrop-blur-lg border-b-neutral-700'}>
+        <nav className={'fixed z-50 w-full py-2 backdrop-blur-lg border-b-neutral-700 shadow-green-400'}>
             <div className={'container px-4 mx-auto relative text-sm'}>
                 <div className={'flex justify-between items-center'}>
                     <div className={'flex items-center flex-shrink-0'}>
@@ -40,10 +39,13 @@ const Navbar = () => {
                     </div>
                     <ul className={'hidden lg:flex ml-14 space-x-12'}>
                         {
-                            navList.map((item, i) => <li key={i}>
+                            navListData.length != 0 ?
+                            navListData.map((item, i) => <li key={i}>
                                     <a href={item.path}>{item.name}</a>
                                 </li>
                             )
+                                :
+                                <LoadingComponent/>
                         }
                     </ul>
                     <div className="hidden lg:flex justify-center space-x-12 items-center">
@@ -66,11 +68,13 @@ const Navbar = () => {
 
                             <ul className={'text-center'}>
                                 {
-                                    navList.map((item, i) => <li key={i} className={'py-4'}>
+                                    navListData.length != 0 ?
+                                    navListData.map((item, i) => <li key={i} className={'py-4'}>
                                             <a href={item.path}>{item.name}</a>
                                         </li>
-                                    )
+                                    ) : <LoadingComponent />
                                 }
+
                             </ul>
                             <div className={'flex space-x-6 pt-5'}>
                                 <div className="lg:hidden justify-center space-x-12 items-center">
