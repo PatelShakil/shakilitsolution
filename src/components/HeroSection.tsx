@@ -1,6 +1,5 @@
 import { Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import React, { useEffect } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import {
     useMotionTemplate,
@@ -8,6 +7,7 @@ import {
     motion,
     animate,
 } from "framer-motion";
+import {useEffect} from "react";
 
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];

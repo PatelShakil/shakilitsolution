@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import {useEffect, useRef} from "react";
 import {
     animate,
     motion,
@@ -12,7 +12,7 @@ const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = 32.5 / 2;
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
-const ProjectItemCard = (props) => {
+const ProjectItemCard = (props: { item: any; index: any; }) => {
     const item = props.item;
     const index = props.index;
 
@@ -26,9 +26,11 @@ const ProjectItemCard = (props) => {
 
     const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: { clientX: number; clientY: number; }) => {
         if (!ref.current) return [0, 0];
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         const rect = ref.current.getBoundingClientRect();
 
         const width = rect.width;
@@ -59,7 +61,6 @@ const ProjectItemCard = (props) => {
             repeatType: "mirror",
         });
     }, []);
-    const border = useMotionTemplate`1px solid ${color}`;
     const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
     const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
 
@@ -96,12 +97,12 @@ const ProjectItemCard = (props) => {
                     </p>
                 </div>
                 <div className="px-6 pt-4 pb-2">
-                    {item.platform.toString().split(",").map((str) => <span
+                    {item.platform.toString().split(",").map((str : string) => <span
                         className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{str}</span>
                     )}
                     {
                         item.technology ?
-                            item.technology.toString().split(",").map((str) =>
+                            item.technology.toString().split(",").map((str : string) =>
                                 <span
                                     className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{str}</span>
                             )

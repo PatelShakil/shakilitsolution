@@ -1,13 +1,20 @@
 import {useEffect, useState} from "react";
 import {Menu, X} from "lucide-react";
 import {ref,onValue} from "firebase/database";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import {database} from "../firebase.js";
 import LoadingComponent from "./utils/Loading.tsx";
+
+interface NavItem {
+    path: string;
+    name: string;
+}
 
 const Navbar = () => {
 
 
-    const [navListData, setNavListData] = useState([]);
+    const [navListData, setNavListData] = useState<NavItem[]>([]);
 
     useEffect(()=>{
 
@@ -70,7 +77,7 @@ const Navbar = () => {
                                 {
                                     navListData.length != 0 ?
                                     navListData.map((item, i) => <li key={i} className={'py-4'}>
-                                            <a href={item.path}>{item.name}</a>
+                                            <a href={item.path.toString()}>{item.name.toString()}</a>
                                         </li>
                                     ) : <LoadingComponent />
                                 }
