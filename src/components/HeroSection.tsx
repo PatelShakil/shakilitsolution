@@ -40,17 +40,16 @@ const HeroSection = () => {
           50% off on first Project
         </span>
                 <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
-                    Create That Your
+                    Shaping Your Future With
                     <span className="text-transparent bg-clip-text"
                           style={{ backgroundImage: gradient }}
                     >
                 {" "}
-                        Business Needs
+                        Our Code.
                 </span>
                 </h1>
                 <p className="my-6 max-w-xl text-center text-base leading-relaxed md:text-lg md:leading-relaxed">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae, et,
-                    distinctio eum impedit nihil ipsum modi.
+                    At <b>Shakil IT Solution</b>, we specialize in delivering top-notch IT services tailored to your unique business requirements. From web and mobile app development to robust backend solutions and dynamic API integration, we cover all aspects of software development. Our expertise spans full-stack development, cross-platform mobile applications, and comprehensive DevOps practices. We pride ourselves on providing innovative, scalable, and efficient solutions that help your business thrive in a digital world. Let's build the future together.
                 </p>
                 <motion.button
                     style={{
