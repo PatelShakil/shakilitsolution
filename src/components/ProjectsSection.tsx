@@ -30,7 +30,7 @@ const ProjectsSection = () =>{
 
 
     return (
-        <div>
+        <div id={"projects"}>
             <motion.h1 className={"text-center font-bold text-4xl md:text-6xl lg:text-8xl m-3 text-transparent bg-clip-text"}
             style={{backgroundImage:gradient,
                 position: 'relative', // Ensures it moves without affecting other elements
@@ -45,7 +45,9 @@ const ProjectsSection = () =>{
                             data.map((item, index) => <ProjectItemCard item={item} index={index}/>)
                         }
                     </div>
-                    : <LoadingComponent/>
+                    : <div className={"h-screen justify-center items-center"}>
+                        <LoadingComponent/>
+                    </div>
             }
         </div>
     );

@@ -5,6 +5,7 @@ import {ref,onValue} from "firebase/database";
 // @ts-expect-error
 import {database} from "../firebase.js";
 import LoadingComponent from "./utils/Loading.tsx";
+import {Link} from "react-router-dom";
 
 interface NavItem {
     path: string;
@@ -48,7 +49,7 @@ const Navbar = () => {
                         {
                             navListData.length != 0 ?
                             navListData.map((item, i) => <li key={i}>
-                                    <a href={item.path}>{item.name}</a>
+                                    <Link to={item.path}>{item.name}</Link>
                                 </li>
                             )
                                 :
@@ -56,10 +57,10 @@ const Navbar = () => {
                         }
                     </ul>
                     <div className="hidden lg:flex justify-center space-x-12 items-center">
-                        <a href="#" className="py-2 px-3 border rounded-md">
-                            Sign In
-                        </a>
-                        <a href={'#'} className={'bg-gradient-to-r from-green-500 to-green-900 py-2 px-3 rounded-md'}>Create Account</a>
+                        <Link to="/login" className="py-2 px-3 border rounded-md">
+                            Login
+                        </Link>
+                        <Link to={'/signup'} className={'bg-gradient-to-r from-green-500 to-green-900 py-2 px-3 rounded-md'}>Create Account</Link>
                     </div>
                     <div className={'lg:hidden md-flex flex-col justify-end'}>
                         <button onClick={toggleNavbar}>
@@ -85,12 +86,12 @@ const Navbar = () => {
                             </ul>
                             <div className={'flex space-x-6 pt-5'}>
                                 <div className="lg:hidden justify-center space-x-12 items-center">
-                                    <a href="#" className="py-2 px-3 border rounded-md">
-                                        Sign In
-                                    </a>
-                                    <a href={'#'}
+                                    <Link to="/login" className="py-2 px-3 border rounded-md">
+                                        Login
+                                    </Link>
+                                    <Link to={'/signup'}
                                        className={'bg-gradient-to-r from-green-500 to-green-900 py-2 px-3 rounded-md'}>Create an
-                                        Account</a>
+                                        Account</Link>
                                 </div>
                             </div>
 

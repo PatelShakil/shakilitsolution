@@ -8,12 +8,14 @@ import {
     animate,
 } from "framer-motion";
 import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
 const gradient = `linear-gradient(to right, ${COLORS_TOP.join(', ')})`;
 const HeroSection = () => {
     const color = useMotionValue(COLORS_TOP[0]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         animate(color, COLORS_TOP, {
@@ -61,6 +63,9 @@ const HeroSection = () => {
                     }}
                     whileTap={{
                         scale: 0.985,
+                    }}
+                    onClick={()=>{
+                        navigate('/signup')
                     }}
                     className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50"
                 >
