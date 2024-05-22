@@ -5,7 +5,7 @@ import ProjectsSection from "../components/ProjectsSection.tsx";
 const HomePage = ()=>{
     return(
         <>
-            <Navbar />
+            <Navbar/>
             <HeroSection/>
             <ProjectsSection/>
         </>

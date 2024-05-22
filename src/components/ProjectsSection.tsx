@@ -1,9 +1,7 @@
 import {motion} from "framer-motion";
 import {useEffect, useState} from "react";
 import {onValue, ref} from "firebase/database";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import {database} from "../firebase";
+import {database} from "../firebase.ts";
 import LoadingComponent from "./utils/Loading.tsx";
 import ProjectItemCard from "./utils/ProjectItemCard.tsx";
 

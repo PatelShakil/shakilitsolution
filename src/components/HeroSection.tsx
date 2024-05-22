@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
+import {auth} from "../firebase.ts";
 
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
@@ -65,11 +66,15 @@ const HeroSection = () => {
                         scale: 0.985,
                     }}
                     onClick={()=>{
-                        navigate('/signup')
+                        if(auth.currentUser != null) {
+                            navigate('/profile');
+                        }else {
+                            navigate('/signup');
+                        }
                     }}
                     className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50"
                 >
-                    Create an Account
+                    {auth.currentUser != null ? "Go to Profile" : "Create an Account"}
                     <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12"/>
                 </motion.button>
             </div>

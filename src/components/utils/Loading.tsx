@@ -1,4 +1,5 @@
 const LoadingComponent = () =>{
+
     return (
         <div className={'flex justify-center items-center text-center'}>
             <span className={'text-2xl pe-2'}>Loading</span>

@@ -1,11 +1,10 @@
 import {useEffect, useState} from "react";
 import {Menu, X} from "lucide-react";
-import {ref,onValue} from "firebase/database";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import {database} from "../firebase.js";
+import {ref, onValue} from "firebase/database";
+import {auth, database} from "../firebase.ts";
 import LoadingComponent from "./utils/Loading.tsx";
 import {Link} from "react-router-dom";
+import UserNavComp from "./UserNavComp.tsx";
 
 interface NavItem {
     path: string;
@@ -17,19 +16,19 @@ const Navbar = () => {
 
     const [navListData, setNavListData] = useState<NavItem[]>([]);
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        const dataRef = ref(database,"navList");
+        const dataRef = ref(database, "navList");
 
-        onValue(dataRef,(snapshot) =>{
+        onValue(dataRef, (snapshot) => {
 
             const data = snapshot.val();
             setNavListData(data);
         });
-    });
+    },[]);
 
     const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
-    const toggleNavbar = () =>{
+    const toggleNavbar = () => {
         setIsMobileDrawerOpen(!isMobileDrawerOpen);
     }
 
@@ -48,53 +47,66 @@ const Navbar = () => {
                     <ul className={'hidden lg:flex ml-14 space-x-12'}>
                         {
                             navListData.length != 0 ?
-                            navListData.map((item, i) => <li key={i}>
-                                    <Link to={item.path}>{item.name}</Link>
-                                </li>
-                            )
+                                navListData.map((item, i) => <li key={i}>
+                                        <Link to={item.path}>{item.name}</Link>
+                                    </li>
+                                )
                                 :
                                 <LoadingComponent/>
                         }
                     </ul>
-                    <div className="hidden lg:flex justify-center space-x-12 items-center">
-                        <Link to="/login" className="py-2 px-3 border rounded-md">
-                            Login
-                        </Link>
-                        <Link to={'/signup'} className={'bg-gradient-to-r from-green-500 to-green-900 py-2 px-3 rounded-md'}>Create Account</Link>
-                    </div>
+                    {
+                        auth.currentUser != null ?
+                            <div className={"hidden lg:flex md:flex"}>
+                                <UserNavComp/>
+                            </div>
+                            :   <div className="hidden lg:flex justify-center space-x-12 items-center">
+                                <Link to="/login" className="py-2 px-3 border rounded-md">
+                                    Login
+                                </Link>
+                                <Link to={'/signup'}
+                                      className={'bg-gradient-to-r from-green-500 to-green-900 py-2 px-3 rounded-md'}>Create
+                                    Account</Link>
+                            </div>
+
+                    }
                     <div className={'lg:hidden md-flex flex-col justify-end'}>
+
                         <button onClick={toggleNavbar}>
                             {
-                                isMobileDrawerOpen ? <X /> : <Menu />
+                                isMobileDrawerOpen ? <X/> : <Menu/>
                             }
                         </button>
                     </div>
                 </div>
                 {
                     isMobileDrawerOpen && (
-                        <div className={'fixed right-0 mt-2 z-20 bg-neutral-900 w-full pb-12 flex flex-col justify-center items-center lg:hidden'}>
+                        <div
+                            className={'fixed right-0 mt-2 z-20 bg-neutral-900 w-full pb-12 flex flex-col justify-center items-center lg:hidden'}>
 
                             <ul className={'text-center'}>
                                 {
                                     navListData.length != 0 ?
-                                    navListData.map((item, i) => <li key={i} className={'py-4'}>
-                                            <a href={item.path.toString()}>{item.name.toString()}</a>
-                                        </li>
-                                    ) : <LoadingComponent />
-                                }
+                                        navListData.map((item, i) => <li key={i} className={'py-4'}>
+                                        <a href={item.path.toString()}>{item.name.toString()}</a>
+                                    </li>
+                                ) : <LoadingComponent/>
+                        }
 
-                            </ul>
-                            <div className={'flex space-x-6 pt-5'}>
-                                <div className="lg:hidden justify-center space-x-12 items-center">
-                                    <Link to="/login" className="py-2 px-3 border rounded-md">
-                                        Login
-                                    </Link>
-                                    <Link to={'/signup'}
-                                       className={'bg-gradient-to-r from-green-500 to-green-900 py-2 px-3 rounded-md'}>Create an
-                                        Account</Link>
-                                </div>
-                            </div>
-
+                    </ul>
+                            {
+                                auth.currentUser != null ?
+                                    <UserNavComp />
+                                    : <div className={'flex space-x-6 pt-5'}>
+                                        <div className="lg:hidden justify-center space-x-12 items-center">
+                                            <Link to="/login" className="py-2 px-3 border rounded-md">
+                                                Login
+                                            </Link>
+                                            <Link to={'/signup'}
+                                                  className={'bg-gradient-to-r from-green-500 to-green-900 py-2 px-3 rounded-md'}>Create an Account</Link>
+                                        </div>
+                                    </div>
+                            }
 
                         </div>
                     )
