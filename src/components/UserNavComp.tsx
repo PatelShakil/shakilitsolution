@@ -3,13 +3,14 @@ import {auth, database} from "../firebase.ts";
 import {onValue, ref} from "firebase/database";
 import LoadingComponent from "./utils/Loading.tsx";
 import {Link} from "react-router-dom";
+import User from "../obj/User.tsx";
 
-interface User {
-    name: string,
-    uid: string,
-    password: string,
-    email: string
+
+export const handleLogout = ()=>{
+    auth.signOut();
+    window.location.reload();
 }
+
 
 const UserNavComp = () => {
 
@@ -27,11 +28,6 @@ const UserNavComp = () => {
         });
     }, []);
 
-
-    const handleLogout = ()=>{
-        auth.signOut();
-        window.location.reload();
-    }
 
 
 

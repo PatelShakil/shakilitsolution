@@ -21,22 +21,21 @@ const SignupPage = () => {
 
     const handleSignup = async () => {
         if(password == confirmPassword) {
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                user = userCredential.user;
-                await sendEmailVerification(userCredential.user);
-                // Save user data to Realtime Database
-                set(ref(database, 'users/' + user.uid), {
-                    uid: user.uid,
-                    name: name,
-                    email: email,
-                    password: password // Storing plaintext passwords is not recommended. Consider hashing the password.
-                }).then(() => {
-                });
-                navigate('/')
-            } catch (error) {
-                console.error(error);
-            }
+                // const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                createUserWithEmailAndPassword(auth,email,password)
+                    .then((userCredential)=>{
+                        user = userCredential.user;
+                        sendEmailVerification(userCredential.user)
+                        // Save user data to Realtime Database
+                        set(ref(database, 'users/' + user.uid), {
+                            uid: user.uid,
+                            name: name,
+                            email: email,
+                            password: password // Storing plaintext passwords is not recommended. Consider hashing the password.
+                        }).then(() => {
+                        });
+                        navigate('/')
+                    }).catch(alert)
         }else{
             alert("Password not matched")
         }
@@ -87,7 +86,7 @@ const SignupPage = () => {
                 >
                     <img src={login} alt={"login img"}/>
                 </div>
-                <form onSubmit={handleSignup} className="w-full p-8 lg:w-1/2">
+                <div className="w-full p-8 lg:w-1/2">
                     <motion.p className="text-xl text-center" style={{color}}>Hey Buddy!</motion.p>
                     <div className="mt-4">
                         <label className="block text-sm font-bold mb-2">
@@ -153,6 +152,7 @@ const SignupPage = () => {
                     </div>
                     <div className="mt-8">
                         <motion.button type={"submit"}
+                                       onClick={handleSignup}
                                        className={"text-white backdrop-blur-3xl shadow-lg font-bold py-2 px-4 w-full rounded hover:bg-black"}>
                             Create an Account
                         </motion.button>
@@ -166,7 +166,7 @@ const SignupPage = () => {
                             <span className="text-blue-400 font-bold text-xl"> Login</span>
                         </Link>
                     </div>
-                </form>
+                </div>
             </motion.div>
 
         </motion.div>

@@ -14,17 +14,18 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
 
     const handleLogin = async () => {
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            if (userCredential.user.emailVerified) {
-                alert('Login successful');
-                navigate('/')
-            } else {
-                alert('Please verify your email first.');
-            }
-        } catch (error) {
-            console.error(error);
-            // alert(error.message)
+        if(email.length > 0 && password.length > 0) {
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    if (userCredential.user.emailVerified) {
+                        alert('Login successful');
+                        navigate('/')
+                    } else {
+                        alert('Please verify your email first.');
+                    }
+                }).catch(alert)
+        }else{
+            alert("Email and password both required")
         }
     };
 
@@ -69,7 +70,7 @@ const LoginPage = () => {
                 >
                     <img src={login} alt={"login img"}/>
                 </div>
-                <form onSubmit={handleLogin} className="w-full p-8 lg:w-1/2">
+                <div className="w-full p-8 lg:w-1/2">
                     <motion.p className="text-xl text-center" style={{color}}>Welcome back!</motion.p>
                     <div className="mt-4">
                         <label className="block text-sm font-bold mb-2">
@@ -111,6 +112,7 @@ const LoginPage = () => {
                     <div className="mt-8">
                         <motion.button
                             type={'submit'}
+                            onClick={handleLogin}
                             className={"text-white backdrop-blur-3xl shadow-lg font-bold py-2 px-4 w-full rounded hover:bg-black"}>
                             Login
                         </motion.button>
@@ -124,7 +126,7 @@ const LoginPage = () => {
                             <span className="text-blue-400 font-bold text-xl"> Sign Up</span>
                         </Link>
                     </div>
-                </form>
+                </div>
             </motion.div>
         </motion.div>
     );

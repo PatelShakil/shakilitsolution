@@ -5,11 +5,9 @@ import {auth, database} from "../firebase.ts";
 import LoadingComponent from "./utils/Loading.tsx";
 import {Link} from "react-router-dom";
 import UserNavComp from "./UserNavComp.tsx";
+import NavItem from "../obj/NavItem.tsx";
 
-interface NavItem {
-    path: string;
-    name: string;
-}
+
 
 const Navbar = () => {
 
