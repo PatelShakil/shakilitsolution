@@ -12,7 +12,6 @@ import {FiArrowRight} from "react-icons/fi";
 
 const ProfilePage = () => {
     const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
-    const gradient = `linear-gradient(to right, ${COLORS_TOP.join(', ')})`;
     const color = useMotionValue(COLORS_TOP[0]);
     const navigate = useNavigate();
     useEffect(() => {
@@ -22,7 +21,8 @@ const ProfilePage = () => {
             repeat: Infinity,
             repeatType: "mirror",
         });
-    }, []);
+    }, );
+    const gradient = `linear-gradient(to right, ${COLORS_TOP.join(', ')})`;
 
     const [user, setUser] = useState<User | null>(null)
     const [isVerified, setIsVerified] = useState(false)
@@ -35,7 +35,7 @@ const ProfilePage = () => {
                 setUser(data);
             });
         }
-    }, []);
+    },[user]);
 
     const border = useMotionTemplate`1px solid ${color}`;
     const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
