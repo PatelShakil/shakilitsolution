@@ -7,7 +7,7 @@ import {
     motion,
     animate,
 } from "framer-motion";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {auth} from "../firebase.ts";
 
@@ -17,6 +17,15 @@ const gradient = `linear-gradient(to right, ${COLORS_TOP.join(', ')})`;
 const HeroSection = () => {
     const color = useMotionValue(COLORS_TOP[0]);
     const navigate = useNavigate();
+    const [isLogin, setIsLogin] = useState(
+        false
+    );
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            setIsLogin(!!user);
+        });
+        return () => unsubscribe();
+    },[]);
 
     useEffect(() => {
         animate(color, COLORS_TOP, {
@@ -66,7 +75,7 @@ const HeroSection = () => {
                         scale: 0.985,
                     }}
                     onClick={()=>{
-                        if(auth.currentUser != null) {
+                        if(isLogin) {
                             navigate('/profile');
                         }else {
                             navigate('/signup');
@@ -74,7 +83,7 @@ const HeroSection = () => {
                     }}
                     className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50"
                 >
-                    {auth.currentUser != null ? "Go to Profile" : "Create an Account"}
+                    {isLogin ? "Go to Profile" : "Create an Account"}
                     <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12"/>
                 </motion.button>
             </div>

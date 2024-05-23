@@ -18,7 +18,7 @@ const ProjectsSection = () =>{
             const d = snapshot.val();
             setData(d);
         });
-    });
+    },[]);
     const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
 
     const gradient = `linear-gradient(to right, ${COLORS_TOP.join(', ')})`;

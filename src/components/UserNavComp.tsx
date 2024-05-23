@@ -4,9 +4,10 @@ import {onValue, ref} from "firebase/database";
 import LoadingComponent from "./utils/Loading.tsx";
 import {Link} from "react-router-dom";
 import User from "../obj/User.tsx";
+import ProfileImage from "./utils/ProfileImage.tsx";
 
 
-export const handleLogout = ()=>{
+export const handleLogout = () => {
     auth.signOut();
     window.location.reload();
 }
@@ -29,23 +30,21 @@ const UserNavComp = () => {
     }, []);
 
 
-
-
     return (
-        <div className={"flex flex-row gap-1"}>
-            <Link to={'/profile'}
-                  className={'flex drop-shadow-lg bg-gradient-to-r from-green-700 to-green-900 px-3 py-2 rounded-xl hover:bg-black'}>
-                {
-                    user != null ?
+        <div className={"flex flex-row gap-2 items-center"}>
+            {user != null ?
+                <Link to={'/profile'} className={"flex flex-row items-center"}>
+                    <ProfileImage username={user.name} height={"45"} width={"45"}/>
+
                         <span className={'text-sm'}>
                   {user.name}
           </span>
-                        : <LoadingComponent/>
-                }
-            </Link>
+                </Link>
+                : <LoadingComponent/>
+            }
             <button
                 onClick={handleLogout}
-                className={'flex flex-row drop-shadow-lg bg-gradient-to-r from-red-700 to-black px-3 py-2 rounded-xl hover:bg-black'}>
+                className={'ml-2 drop-shadow-lg bg-gradient-to-r from-red-700 to-black px-3 py-2 rounded-xl'}>
                 {
                     <span className={'text-sm'}>
                     Logout
