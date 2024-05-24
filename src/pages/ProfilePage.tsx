@@ -10,7 +10,8 @@ import {handleLogout} from "../components/UserNavComp.tsx";
 import {animate, motion, useMotionTemplate, useMotionValue} from "framer-motion";
 import {FiArrowRight} from "react-icons/fi";
 
-const ProfilePage = () => {
+const ProfilePage = (props: { isLogin: boolean | null; }) => {
+    const isLogin = props.isLogin
     const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
     const color = useMotionValue(COLORS_TOP[0]);
     const navigate = useNavigate();
@@ -27,8 +28,8 @@ const ProfilePage = () => {
     const [user, setUser] = useState<User | null>(null)
     const [isVerified, setIsVerified] = useState(false)
     useEffect(() => {
-        if (auth.currentUser != null) {
-            setIsVerified(auth.currentUser.emailVerified);
+        if (isLogin) {
+            setIsVerified(auth.currentUser!.emailVerified);
             const dataRef = ref(database, "users/" + auth.currentUser!.uid);
             onValue(dataRef, (snapshot) => {
                 const data = snapshot.val() as User;
@@ -44,6 +45,7 @@ const ProfilePage = () => {
         <div>
             <Navbar/>
             {
+                isLogin ?
                 user != null ?
                     isVerified ?
                         <div className="container mx-auto py-8">
@@ -105,6 +107,7 @@ const ProfilePage = () => {
                     : <div className={"flex flex-col h-screen items-center justify-center"}>
                         <LoadingComponent/>
                     </div>
+                    : <div className={"flex h-screen justify-center items-center"}><h1>Please Login First</h1></div>
             }
         </div>
     )
